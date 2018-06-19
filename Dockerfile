@@ -1,22 +1,39 @@
-FROM lambci/lambda:build
+FROM python:3.6-alpine
+MAINTAINER "James Burke" <james.burke@eon-offgrid.com>
 
-MAINTAINER "Daniel Whatmuff" <danielwhatmuff@gmail.com>
+COPY requirements.txt /home/requirements.txt
 
-COPY yum.conf /etc/yum.conf
+RUN apk add --no-cache gcc musl-dev libxml2-dev libxslt-dev postgresql-dev bash git openssl-dev libffi-dev && \
+    pip install virtualenv && \
+    virtualenv /var/venv && \
+    pip install --no-cache-dir -U pip && \
+    git -C / clone https://gitlab.com/eogs-os/Zappa.git zappa
+    
 
-RUN yum clean all && \
-    yum -y install python27-devel python27-virtualenv vim postgresql postgresql-devel mysql mysql-devel gcc lapack-devel blas-devel libyaml-devel && \
-    yum --enablerepo=epel -y install hdf5-devel && \
-    pip install -U pip && \
-    pip install -U zappa mysql-python
-
-WORKDIR /var/task
-
-RUN virtualenv /var/venv && \
-    source /var/venv/bin/activate && \
-    pip install -U pip && \
+RUN source /var/venv/bin/activate && \
+    pip install -e /zappa && \
+    pip install --no-cache-dir -r /home/requirements.txt && \
+    pip install pip==9.0.3 && \
+    # lxml && \
+    # pip install --no-cache-dir arrow && \
+    # pip install --no-cache-dir beautifulsoup4  && \
+    # pip install --no-cache-dir bottle && \
+    # pip install --no-cache-dir bottle-sqlalchemy && \
+    # pip install --no-cache-dir configobj && \
+    # pip install --no-cache-dir psycopg2 && \
+    # pip install --no-cache-dir SQLAlchemy && \
+    # pip install --no-cache-dir pyopenssl && \
+    # pip install --no-cache-dir pyasn1  && \
+    # pip install --no-cache-dir ndg-httpsclient && \
+    # pip install --no-cache-dir PyJWT && \
+    # pip install --no-cache-dir logmatic-python && \
+    # pip install --no-cache-dir pytz && \
+    # pip install --no-cache-dir influxdb && \
+    # pip install --no-cache-dir pygeohash && \
+    # pip install --no-cache-dir cryptography==2.1.4 && \
+    # pip install --no-cache-dir numpy && \
+    # pip install boddle && \
     deactivate
 
-COPY bashrc /root/.bashrc
+CMD ["/bin/bash"]
 
-CMD ["zappa"]
