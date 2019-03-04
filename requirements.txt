@@ -1,5 +1,7 @@
+zappa==0.47.0
 arrow
 bottle
 configobj
 pyopenssl
 cryptography>=2.1.4
+hvac
