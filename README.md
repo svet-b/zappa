@@ -6,18 +6,14 @@ Note: Requires docker to be installed and running if you wish to build it
 
 ## To build it
 
-Note: you have to be in the directory one level up
+Note: you have to be in the directory one level up. This also applied the tag
 
-`docker image build --rm zappa`
-
-## Tag the build
-
-`docker tag 9d4427bce515 peregrinius/zappa:latest`
+`docker image build --rm -t ammp/zappa:lean zappa`
 
 ## Test the build
 
-`docker run -it peregrinius/zappa:latest`
+`docker run -it ammp/zappa:lean`
 
 ## Push the build
 
-`docker push peregrinius/zappa:latest`
+`docker push ammp/zappa:lean`
