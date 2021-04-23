@@ -8,12 +8,12 @@ Note: Requires docker to be installed and running if you wish to build it
 
 Note: you have to be in the directory one level up. This also applied the tag
 
-`docker image build --rm -t ammp/zappa:lean zappa`
+`docker image build --rm -t ammp/zappa:pipenv zappa`
 
 ## Test the build
 
-`docker run -it ammp/zappa:lean`
+`docker run -it ammp/zappa:pipenv`
 
 ## Push the build
 
-`docker push ammp/zappa:lean`
+`docker push ammp/zappa:pipenv`

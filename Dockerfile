@@ -1,18 +1,10 @@
-FROM python:3.6-alpine
+FROM python:3.8-alpine
 MAINTAINER "AMMP Technologies" <operations@ammp.io>
 
-COPY requirements.txt /home/requirements.txt
-
 RUN apk update && \
-    apk add --no-cache gcc musl-dev libxml2-dev libxslt-dev bash git openssl-dev libffi-dev && \
-    pip install virtualenv && \
-    virtualenv /var/venv && \
-    pip install --no-cache-dir -U pip
-
-RUN source /var/venv/bin/activate && \
-    pip install --no-cache-dir -U pip && \
-    pip install --no-cache-dir -r /home/requirements.txt && \
-    deactivate
+    apk add --no-cache gcc musl-dev postgresql-dev libxml2-dev libxslt-dev bash git openssl-dev libffi-dev gettext && \
+    pip install --no-cache-dir -U pip  && \
+    pip install pipenv
 
 CMD ["/bin/bash"]
 
